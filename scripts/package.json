@@ -1,0 +1,9 @@
+{
+  "name": "whatsapp-queue-trigger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Déclenche le traitement d'un lot de whatsapp_queue via un vrai navigateur headless, pour passer le système anti-bot d'infinityfree.",
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}

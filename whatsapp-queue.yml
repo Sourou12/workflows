@@ -1,0 +1,35 @@
+name: Traitement de la file WhatsApp
+
+on:
+  schedule:
+    # Toutes les 5 minutes (minimum autorisé par GitHub Actions)
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {} # permet de le déclencher manuellement depuis l'onglet Actions
+
+jobs:
+  envoyer-lot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        working-directory: scripts
+        run: npm install
+
+      - name: Installer Chromium (Playwright)
+        working-directory: scripts
+        run: npx playwright install --with-deps chromium
+
+      - name: Déclencher le traitement d'un lot
+        working-directory: scripts
+        env:
+          CRON_URL: ${{ secrets.WHATSAPP_CRON_URL }}
+          CRON_KEY: ${{ secrets.WHATSAPP_CRON_KEY }}
+        run: node trigger-whatsapp-queue.js

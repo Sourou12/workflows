@@ -1,10 +1,7 @@
 name: Traitement de la file WhatsApp
 
 on:
-  schedule:
-    # Toutes les 5 minutes (minimum autorisé par GitHub Actions)
-    - cron: '*/5 * * * *'
-  workflow_dispatch: {} # permet de le déclencher manuellement depuis l'onglet Actions
+  workflow_dispatch: {} # déclenché via l'API GitHub par cron-job.org (voir ci-dessous)
 
 jobs:
   envoyer-lot:

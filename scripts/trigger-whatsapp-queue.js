@@ -16,7 +16,7 @@ const { chromium } = require('playwright');
   const page = await context.newPage();
 
   try {
-    await page.goto(url, { waitUntil: 'networkidle', timeout: 120000 });
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 240000 });
 
     // La première réponse d'infinityfree est souvent la page de vérification
     // anti-bot, qui pose un cookie via JS puis redirige automatiquement.
@@ -24,7 +24,7 @@ const { chromium } = require('playwright');
     let body = await page.textContent('body');
     let tentatives = 0;
     while (body && body.includes('requires Javascript') && tentatives < 5) {
-      await page.waitForNavigation({ waitUntil: 'networkidle', timeout: 120000 }).catch(() => {});
+      await page.waitForNavigation({ waitUntil: 'networkidle', timeout: 240000 }).catch(() => {});
       body = await page.textContent('body');
       tentatives++;
     }
